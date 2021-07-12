@@ -1,0 +1,22 @@
+{
+  "name": "my_anime",
+  "version": "1.0.0",
+  "description": "re writing my old project but I'm better at programming now",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/JeromeLalunio/my_anime.git"
+  },
+  "keywords": [
+    "anime"
+  ],
+  "author": "jerome",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JeromeLalunio/my_anime/issues"
+  },
+  "homepage": "https://github.com/JeromeLalunio/my_anime#readme"
+}
