@@ -1,10 +1,11 @@
 {
   "name": "my_anime",
   "version": "1.0.0",
-  "description": "re writing my old project but I'm better at programming now",
+  "private": true,
+  "description": "re writing my old project not that I've Improved my skills",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/JeromeLalunio/my_anime/issues"
   },
-  "homepage": "https://github.com/JeromeLalunio/my_anime#readme"
+  "homepage": "https://github.com/JeromeLalunio/my_anime#readme",
+  "devDependencies": {
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2"
+  }
 }
