@@ -1,19 +1,20 @@
-const path = require("path");
+const path = require("path")
+const { VueLoaderPlugin } = require('vue-loader');
+
 module.exports = {
     mode: "development",
-    entry: "./src/index.ts",
+    entry: "./src/index.js",
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
-            },
-        ],
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            }
+        ]
     },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
-    },
+    plugins: [
+        new VueLoaderPlugin(),
+    ],
     output: {
         filename: "main.js",
         path: path.resolve(__dirname, "build")
