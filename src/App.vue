@@ -1,7 +1,7 @@
 <template>
   <main>
-    <anime-sidebar></anime-sidebar>
     <anime-player></anime-player>
+    <anime-sidebar></anime-sidebar>
   </main>
 </template>
 
@@ -24,19 +24,22 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
-$primary: #007ae6;
-$primaryLight: #99cfff;
-$primaryDark: #005299;
-
-$bgDark: #1a1a1a;
-$bgLight: #999;
-
-body {
-  background: $bgDark;
-}
+<style lang="scss" scoped>
+@import "./styles/variables.scss";
+@import "./styles/mixins.scss";
 
 main {
   display: flex;
+  flex-direction: row-reverse;
+  margin: 0;
+  padding: 0;
+
+  @include desktop {
+  }
+
+  @include mobile {
+    display: block;
+    padding-top: 5vh;
+  }
 }
 </style>

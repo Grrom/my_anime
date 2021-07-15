@@ -1,6 +1,6 @@
 <template>
-  <div>
-    Sidebar
+  <div class="sidebar">
+    sidebar
     <anime-tile></anime-tile>
   </div>
 </template>
@@ -18,5 +18,21 @@ export default defineComponent({
 });
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+@import "../styles/variables.scss";
+@import "../styles/mixins.scss";
+
+.sidebar {
+  background: $bgLight;
+
+  @include desktop {
+    width: 20vw;
+    height: 100vh;
+  }
+
+  @include mobile {
+    width: 95vw;
+    margin: 8px auto;
+  }
+}
 </style>
