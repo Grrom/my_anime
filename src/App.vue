@@ -28,6 +28,12 @@ export default defineComponent({
 @import "./styles/variables.scss";
 @import "./styles/mixins.scss";
 
+// FONTS
+@font-face {
+  font-family: "Nunito";
+  src: url(./assets/fonts/Nunito/Nunito-Regular.ttf) format("truetype");
+}
+
 main {
   display: flex;
   flex-direction: row-reverse;
