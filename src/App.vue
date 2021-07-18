@@ -1,7 +1,7 @@
 <template>
   <main>
     <anime-player></anime-player>
-    <anime-sidebar></anime-sidebar>
+    <anime-sidebar :animeList="animeList"></anime-sidebar>
   </main>
 </template>
 
@@ -18,9 +18,25 @@ export default defineComponent({
   },
   name: "App",
   data() {
-    return {};
+    return {
+      animeList: {},
+    };
   },
-  methods: {},
+  methods: {
+    fetchLocalAnimes() {
+      fetch("http://127.0.0.1:3000/anime-list", {
+        credentials: "same-origin",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          this.animeList = data;
+        })
+        .catch((error) => console.warn(error));
+    },
+  },
+  mounted() {
+    this.fetchLocalAnimes();
+  },
 });
 </script>
 

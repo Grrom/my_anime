@@ -1,7 +1,11 @@
 <template>
   <div class="sidebar">
-    sidebar
-    <anime-tile></anime-tile>
+    <anime-tile
+      v-for="(episodes, name) in animeList"
+      :key="name"
+      :name="name"
+      :episodes="episodes"
+    ></anime-tile>
   </div>
 </template>
 
@@ -15,6 +19,9 @@ export default defineComponent({
   components: {
     animeTile,
   },
+  props: {
+    animeList: Object,
+  },
 });
 </script>
 
@@ -23,7 +30,7 @@ export default defineComponent({
 @import "../styles/mixins.scss";
 
 .sidebar {
-  background: $bgLight;
+  background: $primaryDark;
 
   @include desktop {
     width: 20vw;

@@ -1,7 +1,14 @@
 <template>
   <div>
-    tile
-    <anime-episode></anime-episode>
+    {{ name }}
+  </div>
+  <div>
+    <anime-episode
+      v-for="episode in episodes"
+      :key="episode"
+      :episodeNumber="episode"
+      class="anime-episode"
+    ></anime-episode>
   </div>
 </template>
 
@@ -15,8 +22,19 @@ export default defineComponent({
   components: {
     animeEpisode,
   },
+  props: {
+    name: String,
+    episodes: Array,
+  },
+  data() {
+    return {};
+  },
 });
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+@import "../styles/variables.scss";
+.anime-episode {
+  border-bottom: 1px solid $white;
+}
 </style>
