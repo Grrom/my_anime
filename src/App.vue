@@ -1,7 +1,7 @@
 <template>
   <main>
-    <anime-player></anime-player>
     <anime-sidebar :animeList="animeList"></anime-sidebar>
+    <anime-player></anime-player>
   </main>
 </template>
 
@@ -52,7 +52,7 @@ export default defineComponent({
 
 main {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   margin: 0;
   padding: 0;
 
@@ -60,7 +60,7 @@ main {
   }
 
   @include mobile {
-    display: block;
+    flex-direction: column-reverse;
     padding-top: 5vh;
   }
 }

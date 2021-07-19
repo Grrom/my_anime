@@ -1,12 +1,15 @@
 // COLORS
-$primary: #007ae6;
-$primaryLight: #57a6db;
-$primaryDark: #004d80;
+$primary: #376ec7;
+$primaryLight: lighten($primary, 20%);
+$primaryDark: darken($primary, 20%);
+$primaryAccent: #103e50;
 
-$bgDark: #1a1a1a;
-$bgLight: #999;
 
-$white: #fff;
+$secondary: #3c4452;
+
+$white: #e5e5e5;
+$black: #000;
+$gray:#404040 ;
 
 
 // SIZES

@@ -11,3 +11,13 @@
         @content
     }
 };
+
+@mixin hover-highlight($highlightColor){
+    &:hover {
+        background-color: $highlightColor;
+       }
+}
+
+@mixin shadow($shadowColor: $black){
+    box-shadow: .1em .1em .2em #{$shadowColor};
+}
