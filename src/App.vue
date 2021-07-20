@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 
 import animePlayer from "./components/animePlayer.vue";
 import animeSidebar from "./components/animeSidebar.vue";
@@ -17,25 +17,25 @@ export default defineComponent({
     animePlayer,
   },
   name: "App",
-  data() {
-    return {
-      animeList: {},
-    };
-  },
-  methods: {
-    fetchLocalAnimes() {
+  setup() {
+    const animeList = ref({});
+    function fetchLocalAnimes() {
       fetch("http://127.0.0.1:3000/anime-list", {
         credentials: "same-origin",
       })
         .then((response) => response.json())
         .then((data) => {
-          this.animeList = data;
+          animeList.value = data;
         })
         .catch((error) => console.warn(error));
-    },
-  },
-  mounted() {
-    this.fetchLocalAnimes();
+    }
+
+    onMounted(fetchLocalAnimes);
+    onMounted(() => console.log("it works now"));
+
+    return {
+      animeList,
+    };
   },
 });
 </script>

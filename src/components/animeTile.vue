@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, reactive, ref, watch } from "vue";
 
 import animeEpisode from "./animeEpisode.vue";
 
@@ -33,28 +33,32 @@ export default defineComponent({
     episodes: Array,
     isSelected: Boolean,
   },
-  data() {
-    return {
-      showEpisodes: false,
-      selectedEpisode: this.episodes[0],
-    };
-  },
-  watch: {
-    showEpisodes(active) {
+  setup(props, context) {
+    const selectedEpisode = ref("hello");
+    const showEpisodes = ref(false);
+
+    function toggleEpisodes() {
+      showEpisodes.value = !showEpisodes.value;
+    }
+
+    function selectEpisode(episodeNumber: String) {
+      context.emit("selected", { name: props.name, episode: episodeNumber });
+    }
+
+    watch(showEpisodes, (active) => {
       if (active) {
-        this.$refs.tile.classList.add("active");
+        // this.$refs.tile.classList.add("active");
       } else {
-        this.$refs.tile.classList.remove("active");
+        // this.$refs.tile.classList.remove("active");
       }
-    },
-  },
-  methods: {
-    toggleEpisodes() {
-      this.showEpisodes = !this.showEpisodes;
-    },
-    selectEpisode(episodeNumber) {
-      this.$emit("selected", { name: this.name, episode: episodeNumber });
-    },
+    });
+
+    return {
+      selectedEpisode,
+      showEpisodes,
+      toggleEpisodes,
+      selectEpisode,
+    };
   },
 });
 </script>

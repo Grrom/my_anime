@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 import animeTile from "./animeTile.vue";
 
@@ -23,17 +23,17 @@ export default defineComponent({
   props: {
     animeList: Object,
   },
-  data() {
+  setup() {
+    const selectedEpisode = ref({});
+
+    function selectAnimeEpisode(animeEpisode: { String: StringConstructor }) {
+      selectedEpisode.value = animeEpisode;
+    }
+
     return {
-      selectedEpisode: { String: String },
+      selectedEpisode,
+      selectAnimeEpisode,
     };
-  },
-  methods: {
-    selectAnimeEpisode(animeEpisode) {
-      this.selectedEpisode = animeEpisode;
-      console.log(this.selectedEpisode);
-      console.log(JSON.parse(JSON.stringify(this.animeList)));
-    },
   },
 });
 </script>

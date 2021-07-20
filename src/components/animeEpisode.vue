@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
 
 export default defineComponent({
   name: "animeEpisode",
@@ -13,18 +13,21 @@ export default defineComponent({
     episodeNumber: String,
     isActive: Boolean,
   },
-  methods: {
-    playEpisode(event: Event) {
+  setup(props, context) {
+    function playEpisode(event: Event) {
       event.stopPropagation();
-      this.$emit("selected", this.episodeNumber);
-    },
-  },
-  mounted() {
-    if (this.isActive) {
-      this.$refs[this.episodeNumber].classList.add("active");
-    } else {
-      this.$refs[this.episodeNumber].classList.remove("active");
+      context.emit("selected", props.episodeNumber);
     }
+
+    function highlight() {
+      if (props.isActive) {
+        // props.refs[this.episodeNumber].classList.add("active");
+      } else {
+        // this.$refs[this.episodeNumber].classList.remove("active");
+      }
+    }
+
+    onMounted(highlight);
   },
 });
 </script>
