@@ -14,7 +14,7 @@ export default defineComponent({
     isActive: Boolean,
   },
   methods: {
-    playEpisode(event) {
+    playEpisode(event: Event) {
       event.stopPropagation();
       this.$emit("selected", this.episodeNumber);
     },
