@@ -1,21 +1,37 @@
 <template>
   <div class="player-frame">
-    <video ref="player" width="650" controls muted="muted" autoplay></video>
+    <video class="player" ref="player" controls muted="muted" autoplay></video>
     <button @click="reqVid">req vid</button>
+    <button @click="testing">testing</button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, inject, onMounted, ref } from "vue";
+
+const emitter = require("tiny-emitter/instance");
 
 export default defineComponent({
   name: "animePlayer",
   setup() {
+    const serverUrl = inject("serverUrl");
+
     const player = ref();
 
-    function reqVid() {
-      fetch("http://127.0.0.1:3000/video", {
+    function testing() {
+      fetch(`${serverUrl}/testing?foo=bad&baz=foo`, {
         credentials: "same-origin",
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.warn(error));
+    }
+
+    function reqVid(anime: String, episode: String) {
+      fetch(`${serverUrl}video?anime=${anime}&episode=${episode}`, {
+        credentials: "same-origin",
+        method: "GET",
       })
         .then((response) => response.body)
         .then((body) => {
@@ -52,9 +68,18 @@ export default defineComponent({
         .catch((err) => console.error(err));
     }
 
+    onMounted(() =>
+      emitter.on("play-episode", (anime: String, episode: String) => {
+        console.log(anime);
+        console.log(episode);
+        reqVid(anime, episode);
+      })
+    );
+
     return {
       player,
       reqVid,
+      testing,
     };
   },
 });
@@ -84,5 +109,9 @@ export default defineComponent({
     min-width: 95vw;
     margin-bottom: 2vw;
   }
+}
+
+.player {
+  object-fit: inherit;
 }
 </style>

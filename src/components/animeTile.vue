@@ -10,6 +10,7 @@
         v-for="episode in episodes"
         :key="episode"
         :episodeNumber="episode"
+        :animeName="name"
         class="anime-episode"
       ></anime-episode>
     </div>

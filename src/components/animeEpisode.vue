@@ -13,14 +13,18 @@ export default defineComponent({
   name: "animeEpisode",
   props: {
     episodeNumber: String,
+    animeName: String,
   },
   setup(props, context) {
     const episode = ref();
 
     function playEpisode(event: Event) {
       event.stopPropagation();
+
       emitter.emit("unhighlight-episode");
       highlight(true);
+
+      emitter.emit("play-episode", props.animeName, props.episodeNumber);
     }
 
     function highlight(on: boolean) {
