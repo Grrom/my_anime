@@ -25,13 +25,6 @@ export default defineComponent({
     animeList: Array,
   },
   setup() {
-    onMounted(() => {
-      emitter.on("request-highlight", () => {
-        emitter.emit("unhighlight-episode");
-        emitter.emit("highlight-episode");
-      });
-    });
-
     return {};
   },
 });

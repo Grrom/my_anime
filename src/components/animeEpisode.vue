@@ -18,13 +18,9 @@ export default defineComponent({
     const episode = ref();
 
     function playEpisode(event: Event) {
-      emitter.on("highlight-episode", () => {
-        highlight(true);
-        emitter.off("highlight-episode");
-      });
-
       event.stopPropagation();
-      emitter.emit("request-highlight");
+      emitter.emit("unhighlight-episode");
+      highlight(true);
     }
 
     function highlight(on: boolean) {
