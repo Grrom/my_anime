@@ -18,20 +18,26 @@ export default defineComponent({
   },
   name: "App",
   setup() {
-    const animeList = ref({});
+    const animeList = ref<Array<Anime>>([]);
+
     function fetchLocalAnimes() {
       fetch("http://127.0.0.1:3000/anime-list", {
         credentials: "same-origin",
       })
         .then((response) => response.json())
         .then((data) => {
-          animeList.value = data;
+          Object.entries(data).forEach((anime) => {
+            let a: Anime = {
+              name: anime[0],
+              episodes: anime[1] as Array<String>,
+            };
+            animeList.value.push(a);
+          });
         })
         .catch((error) => console.warn(error));
     }
 
     onMounted(fetchLocalAnimes);
-    onMounted(() => console.log("it works now"));
 
     return {
       animeList,

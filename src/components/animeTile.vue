@@ -8,10 +8,8 @@
     >
       <anime-episode
         v-for="episode in episodes"
-        :key="selectedEpisode + episode"
+        :key="episode"
         :episodeNumber="episode"
-        :isActive="selectedEpisode === episode"
-        @selected="selectEpisode"
         class="anime-episode"
       ></anime-episode>
     </div>
@@ -19,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, ref, watch } from "vue";
 
 import animeEpisode from "./animeEpisode.vue";
 
@@ -31,33 +29,27 @@ export default defineComponent({
   props: {
     name: String,
     episodes: Array,
-    isSelected: Boolean,
   },
   setup(props, context) {
-    const selectedEpisode = ref("hello");
     const showEpisodes = ref(false);
+    const tile = ref();
 
     function toggleEpisodes() {
       showEpisodes.value = !showEpisodes.value;
     }
 
-    function selectEpisode(episodeNumber: String) {
-      context.emit("selected", { name: props.name, episode: episodeNumber });
-    }
-
-    watch(showEpisodes, (active) => {
+    watch(showEpisodes, (active: boolean) => {
       if (active) {
-        // this.$refs.tile.classList.add("active");
+        tile.value?.classList.add("active");
       } else {
-        // this.$refs.tile.classList.remove("active");
+        tile.value?.classList.remove("active");
       }
     });
 
     return {
-      selectedEpisode,
+      tile,
       showEpisodes,
       toggleEpisodes,
-      selectEpisode,
     };
   },
 });

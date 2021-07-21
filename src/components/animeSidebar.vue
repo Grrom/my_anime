@@ -1,19 +1,20 @@
 <template>
   <div class="sidebar">
     <anime-tile
-      v-for="(episodes, name) in animeList"
-      :key="name + selectedEpisode.episode"
-      :name="name"
-      :episodes="episodes"
-      @selected="selectAnimeEpisode"
+      v-for="anime in animeList"
+      :key="anime.name"
+      :name="anime.name"
+      :episodes="anime.episodes"
     ></anime-tile>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 
 import animeTile from "./animeTile.vue";
+
+const emitter = require("tiny-emitter/instance");
 
 export default defineComponent({
   name: "animeSidebar",
@@ -21,19 +22,17 @@ export default defineComponent({
     animeTile,
   },
   props: {
-    animeList: Object,
+    animeList: Array,
   },
   setup() {
-    const selectedEpisode = ref({});
+    onMounted(() => {
+      emitter.on("request-highlight", () => {
+        emitter.emit("unhighlight-episode");
+        emitter.emit("highlight-episode");
+      });
+    });
 
-    function selectAnimeEpisode(animeEpisode: { String: StringConstructor }) {
-      selectedEpisode.value = animeEpisode;
-    }
-
-    return {
-      selectedEpisode,
-      selectAnimeEpisode,
-    };
+    return {};
   },
 });
 </script>

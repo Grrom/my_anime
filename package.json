@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@vue/compiler-sfc": "^3.1.4",
+    "tiny-emitter": "^2.1.0",
     "vue": "^3.1.4",
     "webpack-node-externals": "^3.0.0"
   }
