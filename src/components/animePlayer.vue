@@ -1,12 +1,62 @@
 <template>
-  <div class="player"></div>
+  <div class="player-frame">
+    <video ref="player" width="650" controls muted="muted" autoplay></video>
+    <button @click="reqVid">req vid</button>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "animePlayer",
+  setup() {
+    const player = ref();
+
+    function reqVid() {
+      fetch("http://127.0.0.1:3000/video", {
+        credentials: "same-origin",
+      })
+        .then((response) => response.body)
+        .then((body) => {
+          console.log(body);
+          const reader = body?.getReader();
+
+          return new ReadableStream({
+            start(controller) {
+              return pump();
+              function pump(): Promise<any> | undefined {
+                return reader?.read().then(({ done, value }) => {
+                  console.log(value);
+                  if (done) {
+                    controller.close();
+                    return;
+                  }
+                  controller.enqueue(value);
+                  return pump();
+                });
+              }
+            },
+          });
+        })
+        .then((stream) => new Response(stream))
+        .then((response) => response.blob())
+        .then((blob) => URL.createObjectURL(blob))
+        .then((url) => {
+          console.log((player.value.src = url));
+          player.value.load();
+          player.value.onloadeddata = function () {
+            player.value.play();
+          };
+        })
+        .catch((err) => console.error(err));
+    }
+
+    return {
+      player,
+      reqVid,
+    };
+  },
 });
 </script>
 
@@ -15,7 +65,7 @@ export default defineComponent({
 @import "../styles/mixins.scss";
 @import "../styles/extension.scss";
 
-.player {
+.player-frame {
   background: $primaryLight;
   margin: auto;
 
