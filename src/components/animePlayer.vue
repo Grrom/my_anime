@@ -1,9 +1,9 @@
 <template>
   <div class="player-frame">
     <video class="player" ref="player" controls muted="muted" autoplay></video>
-    <button @click="reqVid">req vid</button>
-    <button @click="testing">testing</button>
   </div>
+  <!-- <button @click="reqVid">req vid</button>
+  <button @click="testing">testing</button> -->
 </template>
 
 <script lang="ts">
@@ -93,9 +93,12 @@ export default defineComponent({
 .player-frame {
   background: $primaryLight;
   margin: auto;
+  display: flex;
+  justify-content: center;
+
+  @extend .rounded-border;
 
   @include shadow;
-  @extend .rounded-border;
 
   @include desktop {
     height: 300px;
@@ -113,5 +116,18 @@ export default defineComponent({
 
 .player {
   object-fit: inherit;
+  margin: auto;
+
+  @extend .rounded-border;
+
+  @include desktop {
+    max-height: 70vh;
+    max-width: 70vw;
+  }
+
+  @include mobile {
+    max-height: 50vw;
+    max-width: 95vw;
+  }
 }
 </style>

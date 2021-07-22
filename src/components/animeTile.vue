@@ -69,6 +69,8 @@ export default defineComponent({
   padding: 0.4em;
   margin: 0.4em;
 
+  @include shadow;
+
   @include hover-highlight($primary);
   @extend .hover-pointer;
   @extend .hover-elevate;
