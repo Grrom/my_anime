@@ -1,9 +1,7 @@
 <template>
   <div class="player-frame">
-    <video class="player" ref="player" controls muted="muted" autoplay></video>
+    <video class="player" ref="player" controls autoplay></video>
   </div>
-  <!-- <button @click="reqVid">req vid</button>
-  <button @click="testing">testing</button> -->
 </template>
 
 <script lang="ts">
@@ -18,68 +16,14 @@ export default defineComponent({
 
     const player = ref();
 
-    function testing() {
-      fetch(`${serverUrl}/testing?foo=bad&baz=foo`, {
-        credentials: "same-origin",
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.warn(error));
-    }
-
-    function reqVid(anime: String, episode: String) {
-      fetch(`${serverUrl}video?anime=${anime}&episode=${episode}`, {
-        credentials: "same-origin",
-        method: "GET",
-      })
-        .then((response) => response.body)
-        .then((body) => {
-          console.log(body);
-          const reader = body?.getReader();
-
-          return new ReadableStream({
-            start(controller) {
-              return pump();
-              function pump(): Promise<any> | undefined {
-                return reader?.read().then(({ done, value }) => {
-                  console.log(value);
-                  if (done) {
-                    controller.close();
-                    return;
-                  }
-                  controller.enqueue(value);
-                  return pump();
-                });
-              }
-            },
-          });
-        })
-        .then((stream) => new Response(stream))
-        .then((response) => response.blob())
-        .then((blob) => URL.createObjectURL(blob))
-        .then((url) => {
-          console.log((player.value.src = url));
-          player.value.load();
-          player.value.onloadeddata = function () {
-            player.value.play();
-          };
-        })
-        .catch((err) => console.error(err));
-    }
-
     onMounted(() =>
       emitter.on("play-episode", (anime: String, episode: String) => {
-        console.log(anime);
-        console.log(episode);
-        reqVid(anime, episode);
+        player.value.src = `${serverUrl}video?anime=${anime}&episode=${episode}`;
       })
     );
 
     return {
       player,
-      reqVid,
-      testing,
     };
   },
 });
@@ -115,9 +59,6 @@ export default defineComponent({
 }
 
 .player {
-  object-fit: inherit;
-  margin: auto;
-
   @extend .rounded-border;
 
   @include desktop {

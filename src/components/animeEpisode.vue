@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, ref } from "vue";
 
 const emitter = require("tiny-emitter/instance");
 
@@ -13,7 +13,6 @@ export default defineComponent({
   name: "animeEpisode",
   props: {
     episodeNumber: String,
-    animeName: String,
   },
   setup(props, context) {
     const episode = ref();
@@ -24,7 +23,7 @@ export default defineComponent({
       emitter.emit("unhighlight-episode");
       highlight(true);
 
-      emitter.emit("play-episode", props.animeName, props.episodeNumber);
+      context.emit("play-episode", props.episodeNumber);
     }
 
     function highlight(on: boolean) {

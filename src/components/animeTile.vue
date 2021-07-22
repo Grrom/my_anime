@@ -11,6 +11,7 @@
         :key="episode"
         :episodeNumber="episode"
         :animeName="name"
+        @play-episode="playEpisode"
         class="anime-episode"
       ></anime-episode>
     </div>
@@ -18,9 +19,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 
 import animeEpisode from "./animeEpisode.vue";
+const emitter = require("tiny-emitter/instance");
 
 export default defineComponent({
   name: "animeTile",
@@ -31,12 +33,16 @@ export default defineComponent({
     name: String,
     episodes: Array,
   },
-  setup(props, context) {
+  setup(props) {
     const showEpisodes = ref(false);
     const tile = ref();
 
     function toggleEpisodes() {
       showEpisodes.value = !showEpisodes.value;
+    }
+
+    function playEpisode(episode: String) {
+      emitter.emit("play-episode", props.name, episode);
     }
 
     watch(showEpisodes, (active: boolean) => {
@@ -51,6 +57,7 @@ export default defineComponent({
       tile,
       showEpisodes,
       toggleEpisodes,
+      playEpisode,
     };
   },
 });
