@@ -1,6 +1,6 @@
 export interface Anime {
     name: String;
-    episodes: Array<String>;
+    episodes: Array<{ episode: String, watched: Boolean }>;
 }
 
 export interface WatchedEpisode {

@@ -9,7 +9,7 @@
       <anime-episode
         v-for="episode in episodes"
         :key="episode"
-        :episodeNumber="episode"
+        :episodeData="episode"
         :animeName="name"
         @play-episode="playEpisode"
         class="anime-episode"

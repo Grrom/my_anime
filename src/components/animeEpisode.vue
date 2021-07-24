@@ -1,18 +1,18 @@
 <template>
-  <small class="episode" v-on:click="playEpisode($event)" ref="episode">
-    {{ episodeNumber.split(".")[0] }}
+  <small v-on:click="playEpisode($event)" ref="episode">
+    {{ episodeData.episode.split(".")[0] }}
   </small>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 
 const emitter = require("tiny-emitter/instance");
 
 export default defineComponent({
   name: "animeEpisode",
   props: {
-    episodeNumber: String,
+    episodeData: Object,
   },
   setup(props, context) {
     const episode = ref();
@@ -23,20 +23,28 @@ export default defineComponent({
       emitter.emit("unhighlight-episode");
       highlight(true);
 
-      context.emit("play-episode", props.episodeNumber);
+      context.emit("play-episode", props.episodeData?.episode);
     }
 
     function highlight(on: boolean) {
       if (on) {
         episode.value.classList.add("active");
+
         emitter.on("unhighlight-episode", () => {
           highlight(false);
           emitter.off("unhighlight-episode");
+          episode.value.classList.add("watched");
         });
       } else {
         episode.value.classList.remove("active");
       }
     }
+
+    onMounted(() => {
+      if (props.episodeData?.watched) {
+        episode.value.classList.add("watched");
+      }
+    });
 
     return {
       episode,
@@ -51,13 +59,20 @@ export default defineComponent({
 @import "../styles/mixins.scss";
 @import "../styles/extension.scss";
 
-.episode {
+.anime-episode {
   margin: 0.2em;
   padding: 0.2em;
   border: 0.1em solid $white;
+  background-color: $primaryDark;
 
   @include hover-highlight($primaryLight);
   @extend .rounded-border;
   @extend .hover-pointer;
+}
+
+.watched {
+  color: rgba($white, 0.3);
+  background-color: $primaryAccent;
+  border: 0.1em solid rgba($white, 0.3);
 }
 </style>

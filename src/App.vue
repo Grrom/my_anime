@@ -28,12 +28,11 @@ export default defineComponent({
       })
         .then((response) => response.json())
         .then((data) => {
-          Object.entries(data).forEach((anime) => {
-            let a: Anime = {
-              name: anime[0],
-              episodes: anime[1] as Array<String>,
-            };
-            animeList.value.push(a);
+          Object.keys(data).forEach((animeName) => {
+            animeList.value.push({
+              name: animeName,
+              episodes: data[animeName],
+            });
           });
         })
         .catch((error) => console.warn(error));
