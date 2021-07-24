@@ -19,7 +19,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, inject, ref, watch } from "vue";
+import { WatchedEpisode } from "../types/Anime";
 
 import animeEpisode from "./animeEpisode.vue";
 const emitter = require("tiny-emitter/instance");
@@ -37,12 +38,30 @@ export default defineComponent({
     const showEpisodes = ref(false);
     const tile = ref();
 
+    const serverUrl = inject("serverUrl");
+
     function toggleEpisodes() {
       showEpisodes.value = !showEpisodes.value;
     }
 
     function playEpisode(episode: String) {
       emitter.emit("play-episode", props.name, episode);
+      saveProgress({ name: props.name!, episode: episode });
+    }
+
+    function saveProgress(episode: WatchedEpisode) {
+      fetch(serverUrl + "save-progress", {
+        credentials: "same-origin",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(episode),
+      })
+        .then((response) => response.json())
+        .then((data) => {})
+        .catch((error) => console.warn(error));
     }
 
     watch(showEpisodes, (active: boolean) => {

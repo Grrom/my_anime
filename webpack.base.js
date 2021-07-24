@@ -34,4 +34,5 @@ module.exports = {
             __VUE_PROD_DEVTOOLS__: false,
         }),
     ],
+    devtool: 'inline-source-map'
 }

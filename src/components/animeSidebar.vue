@@ -10,11 +10,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent } from "vue";
 
 import animeTile from "./animeTile.vue";
-
-const emitter = require("tiny-emitter/instance");
 
 export default defineComponent({
   name: "animeSidebar",
@@ -23,9 +21,6 @@ export default defineComponent({
   },
   props: {
     animeList: Array,
-  },
-  setup() {
-    return {};
   },
 });
 </script>

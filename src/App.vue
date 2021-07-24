@@ -6,10 +6,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, inject, onMounted, ref } from "vue";
 
 import animePlayer from "./components/animePlayer.vue";
 import animeSidebar from "./components/animeSidebar.vue";
+import { Anime } from "./types/Anime";
 
 export default defineComponent({
   components: {
@@ -19,9 +20,10 @@ export default defineComponent({
   name: "App",
   setup() {
     const animeList = ref<Array<Anime>>([]);
+    const serverUrl = inject("serverUrl");
 
     function fetchLocalAnimes() {
-      fetch("http://127.0.0.1:3000/anime-list", {
+      fetch(serverUrl + "anime-list", {
         credentials: "same-origin",
       })
         .then((response) => response.json())
