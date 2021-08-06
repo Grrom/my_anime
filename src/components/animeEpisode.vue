@@ -71,17 +71,18 @@ export default defineComponent({
 .anime-episode {
   margin: 0.2em;
   padding: 0.2em;
-  border: 0.1em solid $white;
-  background-color: $primaryDark;
+  border: 0.1em solid $primaryAccent;
+  background-color: $primaryLight;
 
-  @include hover-highlight($primaryLight);
+  @include hover-highlight($primaryLighter);
   @extend .rounded-border;
   @extend .hover-pointer;
+  @extend .hover-elevate;
 }
 
 .watched {
-  color: rgba($white, 0.3);
-  background-color: $primaryAccent;
-  border: 0.1em solid rgba($white, 0.3);
+  color: rgba($primaryAccent, 0.3);
+  background-color: $primaryLight;
+  border: 0.1em solid rgba($primaryAccent, 0.3);
 }
 </style>

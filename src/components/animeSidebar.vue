@@ -31,8 +31,7 @@ export default defineComponent({
 @import "../styles/extension.scss";
 
 .sidebar {
-  background: $primaryDark;
-  padding: 0.1em;
+  background: $primaryLight;
 
   @extend .rounded-border;
   @include shadow;

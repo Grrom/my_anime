@@ -89,22 +89,22 @@ export default defineComponent({
 
 .anime-tile {
   text-transform: capitalize;
-  background-color: $primaryDark;
-  border: 1px solid $white;
+  background-color: $primaryLight;
+  border: 1px solid $primaryAccent;
   color: $white;
   padding: 0.4em;
   margin: 0.4em;
 
   @include shadow;
 
-  @include hover-highlight($primary);
+  @include hover-highlight($primaryLighter);
   @extend .hover-pointer;
   @extend .hover-elevate;
   @extend .rounded-border;
 }
 
 .episode-list {
-  background-color: $primaryAccent;
+  background-color: $primaryLight;
   display: flex;
   list-style: none;
   flex-wrap: wrap;

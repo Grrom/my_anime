@@ -1,16 +1,13 @@
 // COLORS
-$primary: #376ec7;
-$primaryLight: lighten($primary, 20%);
-$primaryDark: darken($primary, 20%);
-$primaryAccent: #103e50;
+$primary: #080808;
 
+$primaryLight: lighten($primary, 10%);
+$primaryLighter: lighten($primary, 20%);
+$primaryLightest: lighten($primary, 30%);
 
-$secondary: #3c4452;
-
+$primaryAccent: #888888;
 $white: #e5e5e5;
 $black: #000;
-$gray:#404040 ;
-
 
 // SIZES
 $desktop: 960px;
