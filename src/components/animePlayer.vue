@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, inject, onMounted, ref } from "vue";
+import { WatchedEpisode } from "../types/Anime";
 
 const emitter = require("tiny-emitter/instance");
 
@@ -16,10 +17,48 @@ export default defineComponent({
 
     const player = ref();
 
+    let currentlyPlaying: WatchedEpisode;
+
+    function saveTimeStamp() {
+      if (currentlyPlaying !== undefined) {
+        fetch(serverUrl + "save-progress", {
+          credentials: "same-origin",
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: currentlyPlaying.name,
+            episode: currentlyPlaying.episode,
+            timeStamp: player.value.currentTime,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {})
+          .catch((error) => console.warn(error));
+      }
+
+      emitter.emit("update-local-timeStamp", player.value.currentTime);
+    }
+
+    window.onunload = () => {
+      if (currentlyPlaying !== undefined) saveTimeStamp();
+    };
+
     onMounted(() =>
-      emitter.on("play-episode", (anime: String, episode: String) => {
-        player.value.src = `${serverUrl}video?anime=${anime}&episode=${episode}`;
-      })
+      emitter.on(
+        "play-episode",
+        (anime: String, episode: String, timeStamp: number) => {
+          saveTimeStamp();
+          player.value.src = `${serverUrl}video?anime=${anime}&episode=${episode}`;
+          player.value.currentTime = timeStamp;
+          currentlyPlaying = {
+            name: anime,
+            episode: episode,
+          };
+        }
+      )
     );
 
     return {

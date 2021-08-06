@@ -44,8 +44,8 @@ export default defineComponent({
       showEpisodes.value = !showEpisodes.value;
     }
 
-    function playEpisode(episode: String) {
-      emitter.emit("play-episode", props.name, episode);
+    function playEpisode(episode: String, timeStamp: number) {
+      emitter.emit("play-episode", props.name, episode, timeStamp);
       saveProgress({ name: props.name!, episode: episode });
     }
 

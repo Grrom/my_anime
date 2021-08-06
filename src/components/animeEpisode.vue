@@ -17,13 +17,22 @@ export default defineComponent({
   setup(props, context) {
     const episode = ref();
 
+    let localTimeStamp = props.episodeData?.timeStamp;
+
     function playEpisode(event: Event) {
       event.stopPropagation();
 
       emitter.emit("unhighlight-episode");
       highlight(true);
 
-      context.emit("play-episode", props.episodeData?.episode);
+      context.emit("play-episode", props.episodeData?.episode, localTimeStamp);
+
+      emitter.on("update-local-timeStamp", (timeStamp: number) => {
+        console.log("got timestamp");
+        console.log(props.episodeData?.episode);
+        localTimeStamp = timeStamp;
+        emitter.off("update-local-timeStamp");
+      });
     }
 
     function highlight(on: boolean) {
