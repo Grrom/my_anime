@@ -28,8 +28,6 @@ export default defineComponent({
       context.emit("play-episode", props.episodeData?.episode, localTimeStamp);
 
       emitter.on("update-local-timeStamp", (timeStamp: number) => {
-        console.log("got timestamp");
-        console.log(props.episodeData?.episode);
         localTimeStamp = timeStamp;
         emitter.off("update-local-timeStamp");
       });
